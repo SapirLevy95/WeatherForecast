@@ -1,0 +1,13 @@
+// const URL =
+//   "https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=068daee7a6b2d70827f39ffd261383d7";
+  // async function CheckData1() {
+  //   const response = await fetch(URL);
+  //   try {
+  //     const resultJson = await response.json();
+  //     console.log("resultJson", resultJson);
+  //   } catch (error) {
+  //     console.error("Failed get json result. error is", error);
+  //   }
+  // }
+
+  // CheckData1();
