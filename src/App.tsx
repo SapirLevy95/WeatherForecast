@@ -15,9 +15,12 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <h1 style={{ marginTop: 10, textAlign: "center", marginBottom: 0 }}>
+        Weather Forecast
+      </h1>
       <CitySearchForm onCityChange={changeCity}></CitySearchForm>
-      {city && <WeatherInfo city={city} />}
+      <div>{city && <WeatherInfo city={city} />}</div>
     </div>
   );
 };

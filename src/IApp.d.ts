@@ -24,5 +24,6 @@ export interface City {
 }
 export interface Forecast {
   date: date;
+  formattedDate: string;
   temp: number;
 }

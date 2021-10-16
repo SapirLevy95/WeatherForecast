@@ -4,30 +4,11 @@ import Cities from "../data/city.list.json";
 /* @ts-ignore */
 import Input from "@reactmaker/react-autocorrect-input";
 import { City } from "../IApp";
-
+import { getCityFromAPI } from "../services/openWeatherService";
+import LocationIcon from "../icons/locationIcon.png";
 const CitiesTemp: any = Cities;
 const CITIES: City[] = CitiesTemp.map((city: City) => city);
 const CITIES_NAMES = CitiesTemp.map((city: City) => city.name);
-
-const getCountryFromAPI = (onCityRecived: (city: City) => void) => {
-  navigator.geolocation.getCurrentPosition(async (position) => {
-    const lat = position.coords.latitude;
-    const long = position.coords.longitude;
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=3dfc3719046ab1bdb560adf66a6afffa`
-    );
-    const rowData = await response.json();
-    const city: City = {
-      id: rowData.id,
-      name: rowData.name,
-      coord: {
-        lon: rowData.coord.lon,
-        lat: rowData.coord.lat,
-      },
-    };
-    onCityRecived(city);
-  });
-};
 
 const CitySearchForm: FunctionComponent<{
   onCityChange: (city: City | null) => void;
@@ -35,16 +16,23 @@ const CitySearchForm: FunctionComponent<{
   const [cityText, setCityText] = useState<string>("");
 
   const getCityFromCoordinates = async () => {
-    getCountryFromAPI((city: City) => {
+    getCityFromAPI((city: City) => {
       setCityText(city.name);
       onCityChange(city);
     });
   };
 
   return (
-    <div className="flex-container">
-      <button onClick={getCityFromCoordinates}> click </button>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        margin: "auto",
+        width: 200,
+      }}
+    >
       <Input
+        style={{ borderTopLeftRadius: 80, borderBottomLeftRadius: 80 }}
         onChange={(value: string) => {
           const city = CITIES.find(
             (item: City) => value.toLowerCase() === item.name.toLowerCase()
@@ -55,6 +43,19 @@ const CitySearchForm: FunctionComponent<{
         value={cityText}
         dataSource={CITIES_NAMES}
       />
+      <button
+        style={{
+          borderTopRightRadius: 80,
+          borderBottomRightRadius: 80,
+          background: "transparent",
+          paddingRight: 4,
+          paddingLeft: 2,
+          border: "1px solid #ccc",
+        }}
+        onClick={getCityFromCoordinates}
+      >
+        <img style={{ height: 30, width: 30 }} src={LocationIcon} alt="Logo" />
+      </button>
     </div>
   );
 };
