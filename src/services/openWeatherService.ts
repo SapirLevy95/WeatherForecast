@@ -1,4 +1,5 @@
-import { City, Forecast } from "../IApp";
+import { City } from "../IApp";
+import { Granularities } from "../enums";
 import moment from "moment";
 
 export const fetchCityDataApi = async (city: City) => {
@@ -6,12 +7,23 @@ export const fetchCityDataApi = async (city: City) => {
     `https://api.openweathermap.org/data/2.5/onecall?lat=${city.coord.lon}&lon=${city.coord.lat}&units=metric&appid=3dfc3719046ab1bdb560adf66a6afffa`
   );
   const rawForecast = await response.json();
-  const forecasts: Forecast[] = rawForecast.daily.map((day: any) => ({
-    date: new Date(day.dt * 1000),
-    formattedDate: moment(new Date(day.dt * 1000)).format("MMM Do YY"),
-    temp: day.temp.day,
-  }));
-  return forecasts;
+  console.log("raw forecast", rawForecast);
+  const dailyForecasts = {
+    [Granularities.DAILY]: rawForecast.daily.map((day: any) => ({
+      date: new Date(day.dt * 1000),
+      formattedDate: moment(new Date(day.dt * 1000)).format("MMM Do YY"),
+      temp: day.temp.day,
+    })),
+  };
+  const HourlyForecasts = {
+    [Granularities.HOURLY]: rawForecast.hourly.map((hour: any) => ({
+      date: new Date(hour.dt * 1000),
+      formattedDate: moment(new Date(hour.dt * 1000)).format("MMM DD LT"),
+      temp: hour.temp,
+    })),
+  };
+  const allForecasts = Object.assign(dailyForecasts, HourlyForecasts);
+  return allForecasts;
 };
 
 export const getCityFromAPI = (onCityRecived: (city: City) => void) => {

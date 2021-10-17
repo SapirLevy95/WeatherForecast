@@ -1,14 +1,11 @@
+import { Granularities } from "./enums";
+
 declare module "*.json" {
   const value: any;
   export default value;
 }
 
 declare module "@reactmaker/react-autocorrect-input" {
-  const value: any;
-  export default value;
-}
-
-declare module "@devexpress/dx-react-chart-material-ui" {
   const value: any;
   export default value;
 }
@@ -26,4 +23,10 @@ export interface Forecast {
   date: date;
   formattedDate: string;
   temp: number;
+}
+
+export interface AllForecasts {
+  // [granularity in Object.keys(Granularities)]: Forecast[];
+  DAILY: Forecast[];
+  HOURLY: Forecast[];
 }
