@@ -1,15 +1,14 @@
 // import { Form } from "react-bootstrap";
 import { FunctionComponent, useEffect, useState } from "react";
 /* @ts-ignore */
-import { Ring } from "react-awesome-spinners";
-/* @ts-ignore */
 import { fetchCityDataApi } from "../services/openWeatherService";
 import { AllForecasts, City, Forecast } from "../IApp";
 import { Granularities } from "../enums";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import GraphComponent from "./GraphComponent";
-import { colors } from "@material-ui/core";
+import TableComponent from "./TableComponent";
+import Spinner from "react-spinner-material";
 
 const WeatherInfo: FunctionComponent<{
   city: City;
@@ -53,10 +52,10 @@ const WeatherInfo: FunctionComponent<{
               ></GraphComponent>
             </TabPanel>
           </Tabs>
-          <h4 style={{ flex: 1, border: "1px solid #ccc" }}>table</h4>
+          <TableComponent currentForecast={forecasts.CURRENT}></TableComponent>
         </div>
       ) : (
-        <Ring />
+        <Spinner radius={30} color={"gray"} stroke={4} visible={true} />
       )}
     </div>
   );

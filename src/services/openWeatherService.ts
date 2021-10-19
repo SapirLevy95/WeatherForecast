@@ -1,28 +1,48 @@
 import { City } from "../IApp";
 import { Granularities } from "../enums";
-import moment from "moment";
+import {
+  getFullDate,
+  getFullDateFormat,
+  getFullDateWithTime,
+  getHourFormat,
+} from "../utilities";
 
 export const fetchCityDataApi = async (city: City) => {
   const response = await fetch(
     `https://api.openweathermap.org/data/2.5/onecall?lat=${city.coord.lon}&lon=${city.coord.lat}&units=metric&appid=3dfc3719046ab1bdb560adf66a6afffa`
   );
   const rawForecast = await response.json();
-  console.log("raw forecast", rawForecast);
   const dailyForecasts = {
     [Granularities.DAILY]: rawForecast.daily.map((day: any) => ({
-      date: new Date(day.dt * 1000),
-      formattedDate: moment(new Date(day.dt * 1000)).format("MMM Do YY"),
+      date: getFullDate(day.dt),
+      formattedDate: getFullDateFormat(day.dt),
       temp: day.temp.day,
     })),
   };
-  const HourlyForecasts = {
+
+  const hourlyForecasts = {
     [Granularities.HOURLY]: rawForecast.hourly.map((hour: any) => ({
-      date: new Date(hour.dt * 1000),
-      formattedDate: moment(new Date(hour.dt * 1000)).format("MMM DD LT"),
+      date: getFullDate(hour.dt),
+      formattedDate: getFullDateWithTime(hour.dt),
       temp: hour.temp,
     })),
   };
-  const allForecasts = Object.assign(dailyForecasts, HourlyForecasts);
+  const currentForecast = {
+    CURRENT: {
+      date: getFullDate(rawForecast.current.dt),
+      formattedDate: getFullDateFormat(rawForecast.current.dt),
+      temp: rawForecast.current.temp,
+      feelsLike: rawForecast.current.feels_like,
+      humidity: rawForecast.current.humidity,
+      sunrise: getHourFormat(rawForecast.current.sunrise),
+      sunset: getHourFormat(rawForecast.current.sunset),
+    },
+  };
+  const allForecasts = Object.assign(
+    dailyForecasts,
+    hourlyForecasts,
+    currentForecast
+  );
   return allForecasts;
 };
 
