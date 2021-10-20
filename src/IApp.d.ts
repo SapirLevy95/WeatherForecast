@@ -1,19 +1,4 @@
 import { Granularities } from "./enums";
-
-declare module "*.json" {
-  const value: any;
-  export default value;
-}
-
-declare module "@reactmaker/react-autocorrect-input" {
-  const value: any;
-  export default value;
-}
-declare module "@material-ui/core/Paper" {
-  const value: any;
-  export default value;
-}
-
 export interface City {
   id: number;
   name: string;

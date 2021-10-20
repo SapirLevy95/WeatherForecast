@@ -1,8 +1,6 @@
-// import { Form } from "react-bootstrap";
 import { FunctionComponent, useEffect, useState } from "react";
-/* @ts-ignore */
 import { fetchCityDataApi } from "../services/openWeatherService";
-import { AllForecasts, City, Forecast } from "../IApp";
+import { AllForecasts, City } from "../IApp";
 import { Granularities } from "../enums";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";

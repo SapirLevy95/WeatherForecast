@@ -34,7 +34,9 @@ export const TableComponent: FunctionComponent<{
   return (
     <TableContainer sx={{ width: "unset" }} component={Paper}>
       <Toolbar>
-        <Typography>{currentForecast.formattedDate}</Typography>
+        <Typography>
+          Today's forecast ({currentForecast.formattedDate})
+        </Typography>
       </Toolbar>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>{entries(currentForecast)}</TableHead>
