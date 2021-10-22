@@ -7,13 +7,23 @@ import GraphComponent from "./GraphComponent";
 import TableComponent from "./TableComponent";
 import Spinner from "react-spinner-material";
 
-const WeatherInfo: FunctionComponent<{
-  city: City;
-}> = ({ city }) => {
-  const [forecasts, setForecasts] = useState<AllForecasts | undefined>();
+const WeatherInfo: FunctionComponent<{ city: City }> = ({ city }) => {
+  const [forecasts, setForecasts] = useState<AllForecasts | null>(null);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
+
+  const fetchData = async () => {
+    try {
+      setForecasts(await fetchCityDataApi(city));
+    } catch (error) {
+      setForecasts(null);
+      console.error("no data was fetched from the API call");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => setForecasts(await fetchCityDataApi(city));
     if (city) {
+      setIsLoading(true);
       fetchData();
     }
   }, [city]);
@@ -51,8 +61,10 @@ const WeatherInfo: FunctionComponent<{
           </Tabs>
           <TableComponent currentForecast={forecasts.CURRENT}></TableComponent>
         </div>
-      ) : (
+      ) : isLoading ? (
         <Spinner radius={30} color={"gray"} stroke={4} visible={true} />
+      ) : (
+        <h1>No data</h1>
       )}
     </div>
   );
