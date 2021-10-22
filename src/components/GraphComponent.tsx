@@ -1,5 +1,4 @@
 import { FunctionComponent } from "react";
-/* @ts-ignore */
 import {
   Label,
   ArgumentAxis,
@@ -9,7 +8,6 @@ import {
   Series,
   Legend,
 } from "devextreme-react/chart";
-import { AllForecasts } from "../IApp";
 import "react-tabs/style/react-tabs.css";
 import { Granularities } from "../enums";
 

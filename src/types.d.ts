@@ -1,23 +1,28 @@
-import { Granularities } from "./enums";
-export interface City {
+declare module "*.json" {
+  export default any;
+}
+declare module "@reactmaker/react-autocorrect-input" {
+  export default any;
+}
+
+interface City {
   id: number;
   name: string;
   coord: { lon: number; lat: number };
 }
-export interface Forecast {
+interface Forecast {
   date: date;
   formattedDate: string;
   temp: number;
 }
 
-export interface AllForecasts {
-  // [granularity in Object.keys(Granularities)]: Forecast[];
+interface AllForecasts {
   DAILY: Forecast[];
   HOURLY: Forecast[];
   CURRENT: CurrentForecast;
 }
 
-export interface CurrentForecast {
+interface CurrentForecast {
   date: date;
   formattedDate: string;
   temp: number;

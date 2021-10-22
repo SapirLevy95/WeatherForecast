@@ -1,11 +1,8 @@
 import "./App.css";
-// import axios from "axios";
 import CitySearchForm from "./components/CitySearchForm";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import WeatherInfo from "./components/WeatherInfo";
-import { City } from "./IApp";
-
 const App = () => {
   const [city, setCity] = useState<City | null>(null);
 

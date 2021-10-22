@@ -1,16 +1,11 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import Cities from "../data/city.list.json";
-/* @ts-ignore */
+import { FunctionComponent, useState } from "react";
+import CITIES from "../data/city.list.json";
 import Input from "@reactmaker/react-autocorrect-input";
-import { City } from "../IApp";
 import { getCityFromAPI } from "../services/openWeatherService";
 import LocationIcon from "../icons/locationIcon.png";
-/* @ts-ignore */
 import Spinner from "react-spinner-material";
 
-const CitiesTemp: any = Cities;
-const CITIES: City[] = CitiesTemp.map((city: City) => city);
-const CITIES_NAMES = CitiesTemp.map((city: City) => city.name);
+const CITIES_NAMES = CITIES.map((city: City) => city.name);
 
 const CitySearchForm: FunctionComponent<{
   onCityChange: (city: City | null) => void;

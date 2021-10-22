@@ -1,4 +1,3 @@
-import { City } from "../IApp";
 import { Granularities } from "../enums";
 import {
   getFullDate,

@@ -1,4 +1,3 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -7,7 +6,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Toolbar, Typography } from "@material-ui/core";
 import { FunctionComponent } from "react";
-import { CurrentForecast } from "../IApp";
 
 const entries = (currentForecast: CurrentForecast) => {
   const rowData = {
@@ -19,7 +17,7 @@ const entries = (currentForecast: CurrentForecast) => {
   };
 
   return Object.entries(rowData).map(([key, value]) => (
-    <TableRow>
+    <TableRow key={key}>
       <TableCell>{key}</TableCell>
       <TableCell>{value}</TableCell>
     </TableRow>
