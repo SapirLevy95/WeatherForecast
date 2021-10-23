@@ -1,6 +1,3 @@
-declare module "*.json" {
-  export default any;
-}
 declare module "@reactmaker/react-autocorrect-input" {
   export default any;
 }

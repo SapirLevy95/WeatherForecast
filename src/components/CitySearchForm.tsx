@@ -3,9 +3,36 @@ import CITIES from "../data/city.list.json";
 import Input from "@reactmaker/react-autocorrect-input";
 import { getCityFromAPI } from "../services/openWeatherService";
 import LocationIcon from "../icons/locationIcon.png";
+import styled from "styled-components";
 import Spinner from "react-spinner-material";
 
-const CITIES_NAMES = CITIES.map((city: City) => city.name);
+const StyledCitySearchFrom = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 200px;
+
+  & .input-city {
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+  }
+
+  & button {
+    border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
+    background: transparent;
+    padding-right: 4px;
+    padding-left: 2px;
+    border: 1px solid #ccc;
+  }
+  & img {
+    height: 30px;
+    width: 30px;
+  }
+`;
+
+const CitiesTemp: any = CITIES;
+const CITIES_NAMES = CitiesTemp.map((city: City) => city.name);
 
 const CitySearchForm: FunctionComponent<{
   onCityChange: (city: City | null) => void;
@@ -24,18 +51,11 @@ const CitySearchForm: FunctionComponent<{
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        margin: "auto",
-        width: 200,
-      }}
-    >
+    <StyledCitySearchFrom>
       <Input
-        style={{ borderTopLeftRadius: 80, borderBottomLeftRadius: 80 }}
+        className="input-city"
         onChange={(value: string) => {
-          const city = CITIES.find(
+          const city = CitiesTemp.find(
             (item: City) => value.toLowerCase() === item.name.toLowerCase()
           );
           onCityChange(city ? city : null);
@@ -44,28 +64,14 @@ const CitySearchForm: FunctionComponent<{
         value={cityText}
         dataSource={CITIES_NAMES}
       />
-      <button
-        style={{
-          borderTopRightRadius: 80,
-          borderBottomRightRadius: 80,
-          background: "transparent",
-          paddingRight: 4,
-          paddingLeft: 2,
-          border: "1px solid #ccc",
-        }}
-        onClick={getCityFromCoordinates}
-      >
+      <button onClick={getCityFromCoordinates}>
         {!isCityChanges ? (
-          <img
-            style={{ height: 30, width: 30 }}
-            src={LocationIcon}
-            alt="Logo"
-          />
+          <img src={LocationIcon} alt="Logo" />
         ) : (
           <Spinner radius={30} color={"gray"} stroke={4} visible={true} />
         )}
       </button>
-    </div>
+    </StyledCitySearchFrom>
   );
 };
 

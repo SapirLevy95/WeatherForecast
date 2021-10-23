@@ -1,11 +1,23 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { fetchCityDataApi } from "../services/openWeatherService";
-import { Granularities } from "../enums";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
-import GraphComponent from "./GraphComponent";
-import TableComponent from "./TableComponent";
+import WeatherGraphTabs from "./WeatherGraphTabs";
+import CurrentWeatherTable from "./CurrentWeatherTable";
 import Spinner from "react-spinner-material";
+import styled from "styled-components";
+
+const StyledWeatherInfo = styled.div`
+  margin-left: 50px;
+  margin-right: 50px;
+  & .city-title {
+    margin-bottom: 10px;
+  }
+  & .weather-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 50px;
+  }
+`;
 
 const WeatherInfo: FunctionComponent<{ city: City }> = ({ city }) => {
   const [forecasts, setForecasts] = useState<AllForecasts | null>(null);
@@ -30,43 +42,19 @@ const WeatherInfo: FunctionComponent<{ city: City }> = ({ city }) => {
 
   console.log("forecasts", forecasts);
   return (
-    <div style={{ marginLeft: 50, marginRight: 50 }}>
-      <h2 style={{ marginBottom: 10 }}>{city.name}</h2>
+    <StyledWeatherInfo>
+      <h2 className="city-title">{city.name}</h2>
       {forecasts ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            gap: 50,
-          }}
-        >
-          <Tabs style={{ flex: 1 }}>
-            <TabList>
-              <Tab>Daily</Tab>
-              <Tab>Hourly</Tab>
-            </TabList>
-            <TabPanel>
-              <GraphComponent
-                forecasts={forecasts}
-                granularity={Granularities.DAILY}
-              ></GraphComponent>
-            </TabPanel>
-            <TabPanel>
-              <GraphComponent
-                forecasts={forecasts}
-                granularity={Granularities.HOURLY}
-              ></GraphComponent>
-            </TabPanel>
-          </Tabs>
-          <TableComponent currentForecast={forecasts.CURRENT}></TableComponent>
+        <div className="weather-container">
+          <WeatherGraphTabs forecasts={forecasts} />
+          <CurrentWeatherTable currentForecast={forecasts.CURRENT} />
         </div>
       ) : isLoading ? (
         <Spinner radius={30} color={"gray"} stroke={4} visible={true} />
       ) : (
         <h1>No data</h1>
       )}
-    </div>
+    </StyledWeatherInfo>
   );
 };
 export default WeatherInfo;

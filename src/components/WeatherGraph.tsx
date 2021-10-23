@@ -8,10 +8,9 @@ import {
   Series,
   Legend,
 } from "devextreme-react/chart";
-import "react-tabs/style/react-tabs.css";
 import { Granularities } from "../enums";
 
-export const GraphComponent: FunctionComponent<{
+export const WeatherGraph: FunctionComponent<{
   forecasts: AllForecasts;
   granularity: Granularities;
 }> = ({ forecasts, granularity }) => {
@@ -28,4 +27,4 @@ export const GraphComponent: FunctionComponent<{
   );
 };
 
-export default GraphComponent;
+export default WeatherGraph;
