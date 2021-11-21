@@ -4,10 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import WeatherGraph from "./WeatherGraph";
 import styled from "styled-components";
 import "react-tabs/style/react-tabs.css";
-
-const StyledWeatherTabs = styled.div`
-  flex: 1;
-`;
+import { StyledWeatherTabs } from "./weatherGraphTabs/WeatherGraphTabs";
 
 export const WeatherGraphTabs: FunctionComponent<{
   forecasts: AllForecasts;

@@ -1,24 +1,23 @@
 import "./App.css";
-import CitySearchForm from "./components/CitySearchForm";
+import CitySearchForm from "./components/citySearchForm/CitySearchForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import WeatherInfo from "./components/WeatherInfo";
-const App = () => {
-  const [city, setCity] = useState<City | null>(null);
+import { StyledApp } from "./AppStyles";
 
-  const changeCity = (city: City | null) => {
+const App = () => {
+  const [city, setCity] = useState<City>();
+
+  const changeCity = (city: City) => {
     setCity(city);
-    console.log("city name in app", city);
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      <h1 style={{ marginTop: 10, textAlign: "center", marginBottom: 0 }}>
-        Weather Forecast
-      </h1>
+    <StyledApp>
+      <h1 className="main-title">Weather Forecast</h1>
       <CitySearchForm onCityChange={changeCity}></CitySearchForm>
       <div>{city && <WeatherInfo city={city} />}</div>
-    </div>
+    </StyledApp>
   );
 };
 
